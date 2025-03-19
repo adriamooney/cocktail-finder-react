@@ -9,6 +9,11 @@ function Home() {
     const [cockTails, setCockTails] = useState([]);
     const [ingredient, setIngredient] = useState('');
     //const [loading, setLoading] = useState(true);
+
+    // useEffect(() => {
+
+    //     fetchCockTails()
+    // }, [])
     
     async function fetchCockTails() {
         console.log(ingredient);
@@ -55,10 +60,10 @@ function Home() {
 
                     <i className="fa-solid fa-martini-glass search__loader"></i>
                     <div className="drinks__list">
-                        <figure className="search__img--wrapper">
+
+                        {cockTails.length > 0 ? (<Cocktails cockTails={cockTails} ingredient={ingredient}/>) : (  <figure className="search__img--wrapper">
                             <img src="https://www.thecocktaildb.com/images/media/drink/5noda61589575158.jpg" alt="" className="search__img" />
-                        </figure>
-                        {cockTails.length > 0 ? (<Cocktails cockTails={cockTails}/>) : <></>}
+                        </figure>)}
                         
                     </div>
                     
