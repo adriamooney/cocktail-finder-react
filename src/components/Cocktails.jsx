@@ -2,8 +2,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Cocktails({cockTails}) {
 
-
+    console.log(cockTails);
   return (
+
     <div>
         {cockTails.map((cockTail) => {
             <div class="drink click" id="drink-${cockTail.idDrink}" onClick="getFullRecipe(${cockTail.idDrink})">   

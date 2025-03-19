@@ -10,18 +10,21 @@ function Home() {
     const [ingredient, setIngredient] = useState('');
     //const [loading, setLoading] = useState(true);
     
-    async function fetchCocktails(event) {
-        event.preventDefault();
+    async function fetchCockTails() {
         console.log(ingredient);
         const {data} = await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`);
 
         console.log(data.drinks);
      
-            setCockTails(data.drinks);
-            console.log(cockTails);
-           // setLoading(false);
-
+        setCockTails(data.drinks);
+        console.log(cockTails);
+        // setLoading(false);
     
+    }
+
+    function getCockTails(event) {
+        event.preventDefault();
+        fetchCockTails();
     }
 
   return (
@@ -42,7 +45,7 @@ function Home() {
                                 />
                             </div>
                             <div className="form__item">
-                                <button className="btn btn__search" onClick={(event) => fetchCocktails(event)} type="submit">
+                                <button className="btn btn__search" onClick={(event) => getCockTails(event)} type="submit">
                                 <FontAwesomeIcon icon={'magnifying-glass'} />
                                 </button>
                             </div>
