@@ -93,6 +93,14 @@ nav {
     display: flex;
 }
 
+.user__icon {
+    padding: 12px;
+    background-color: #2B303A;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+}
+
 .logo__wrapper {
     width: 60px;
     display: flex;
@@ -261,7 +269,12 @@ header {
 .drink {
     width: 25%;
     padding: 24px;
-
+}
+.drink--skeleton {
+    background: #d3d3d3;
+    margin: 24px;
+    border-radius: 8px;
+    height: 180px;
 }
 
 .drink__title {
@@ -328,16 +341,16 @@ header {
     display: flex;
     align-items: start;
     justify-content: center;
-    position: fixed;
-    top: 50%;
-    left: 45%;
-    transform: translate(-50%, -45%);
+    /* position: fixed; */
+    /* top: 50%;
+    left: 45%; */
+    /* transform: translate(-50%, -45%); */
     padding: 48px 24px;
     background: #fff;
     box-shadow:10px 10px 50px rgb(0, 0, 0, .3);
     border-radius: 8px;
-    width: 90%;
-    max-width: 750px;
+    /* width: 90%; */
+    /* max-width: 750px; */
     margin: 24px;
 }
 

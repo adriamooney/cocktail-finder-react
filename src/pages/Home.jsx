@@ -2,29 +2,12 @@ import React, {useState, useEffect} from 'react'
 import Header from '../components/ui/Header'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Cocktails from '../components/Cocktails';
-import axios from 'axios';
 
-function Home() {
 
-    const [cockTails, setCockTails] = useState([]);
-    const [ingredient, setIngredient] = useState('');
-    //const [loading, setLoading] = useState(true);
+function Home({ingredient, setIngredient, fetchCockTails, cockTails, loading}) {
 
-    // useEffect(() => {
-
-    //     fetchCockTails()
-    // }, [])
-    
-    async function fetchCockTails() {
-        console.log(ingredient);
-        const {data} = await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`);
-
-        console.log(data.drinks);
-     
-        setCockTails(data.drinks);
-        console.log(cockTails);
-        // setLoading(false);
-    
+    function setDrinkIngredient(ingredient) {
+        setIngredient(ingredient)
     }
 
     function getCockTails(event) {
@@ -46,7 +29,7 @@ function Home() {
                                 <input 
                                 type="text" 
                                 id="form__search--input" className="input" placeholder="Search by ingredient"
-                                onChange={(event) => setIngredient(event.target.value)}
+                                onChange={(event) => setDrinkIngredient(event.target.value)}
                                 />
                             </div>
                             <div className="form__item">
@@ -61,9 +44,13 @@ function Home() {
                     <i className="fa-solid fa-martini-glass search__loader"></i>
                     <div className="drinks__list">
 
-                        {cockTails.length > 0 ? (<Cocktails cockTails={cockTails} ingredient={ingredient}/>) : (  <figure className="search__img--wrapper">
+                        
+                        {loading ? new Array(4).fill(0).map((_, index) => (
+                            <div className="drink drink--skeleton" key={index}>
+                            </div>
+                        )) : (cockTails.length > 0 ? (<Cocktails cockTails={cockTails} ingredient={ingredient}/>) : (  <figure className="search__img--wrapper">
                             <img src="https://www.thecocktaildb.com/images/media/drink/5noda61589575158.jpg" alt="" className="search__img" />
-                        </figure>)}
+                        </figure>))}
                         
                     </div>
                     
