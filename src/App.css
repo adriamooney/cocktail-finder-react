@@ -164,6 +164,26 @@ header {
     animation: fade-up 650ms 650ms backwards;
 }
 
+/* LOGIN */
+
+.login__wrapper {
+    background: #fff;
+    border-radius: 8px;
+    width: 50%;
+    margin: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 24px auto;
+    padding: 48px;
+}
+
+.btn--login {
+    margin-top: 24px;
+    color: #fff;
+}
+
 /* SEARCH */
 
 .form__wrapper {

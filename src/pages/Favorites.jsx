@@ -16,7 +16,6 @@ function Favorites({favorites, user}) {
     async function fetchFavorites(favorites) {
 
         const favoritesFromDb = await getFavoritesFromDb();
-        console.log(favoritesFromDb);
 
         let tempDrinksArr =[];
 

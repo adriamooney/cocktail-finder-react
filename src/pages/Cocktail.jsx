@@ -6,7 +6,7 @@ import Cocktails from '../components/Cocktails';
 import { db } from '../firebase/init';
 import {collection, query, where, getDocs, getDoc, doc } from 'firebase/firestore';
 
-function Cocktail({favorites, addFavorite, removeFavorite, cockTails, ingredient, user}) {
+function Cocktail({favorites, addFavorite, removeFavorite, cockTails, ingredient, getFavoriteFromDb}) {
 
     const { id } = useParams();
     const [cockTail, setCockTail] = useState({});
@@ -24,16 +24,23 @@ function Cocktail({favorites, addFavorite, removeFavorite, cockTails, ingredient
     }
 
 
-    async function getFavoriteFromDb(id) {
-    const favoriteRef = await query(collection(db, 'favorites'), where("uid", "==", user.uid), where("idDrink", "==", id));
-    const { docs }  = await getDocs(favoriteRef);
+    // async function getFavoriteFromDb(id) {
+    // const favoriteRef = await query(collection(db, 'favorites'), where("uid", "==", user.uid), where("idDrink", "==", id));
+    // const { docs }  = await getDocs(favoriteRef);
 
-    const favoritesArr = docs.map(doc => doc.data());
-    console.log(favoritesArr);
-    if(favoritesArr.length > 0) {
-        setIsFavorite(true);
-    }
+    // const favoritesArr = docs.map(doc => doc.data());
+    // if(favoritesArr.length > 0) {
+    //     setIsFavorite(true);
+    // }
     
+    // }
+
+   async function setFavoriteFromDb(id) {
+        const {favoritesArr} = await getFavoriteFromDb(id);
+        console.log(favoritesArr);
+        if(favoritesArr.length > 0) {
+            return setIsFavorite(true);
+        }
     }
     
 
@@ -48,8 +55,8 @@ function Cocktail({favorites, addFavorite, removeFavorite, cockTails, ingredient
     }
 
     useEffect(() => {
-       //setIsFavorite(favorites.includes(id));
-        getFavoriteFromDb(id);
+        setIsFavorite(favorites.includes(id));
+        setFavoriteFromDb(id);
         fetchCockTail();
         window.scrollTo(0, 0);
     }, [id])
@@ -58,7 +65,6 @@ function Cocktail({favorites, addFavorite, removeFavorite, cockTails, ingredient
         for(let i=1; i<=15; i++) {
             
             if(cockTailArr['strIngredient' + i]) {
-                console.log(cockTailArr['strIngredient' + i]);
                 //need to check if in array, rerendering causes duplicates
                 setIngredients(ingredients => [...ingredients, cockTailArr['strIngredient' + i]]);  
             }

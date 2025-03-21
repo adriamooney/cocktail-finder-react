@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { auth, db } from './firebase/init';
-import {collection, addDoc, deleteDoc, doc} from 'firebase/firestore';
+import {collection, addDoc, deleteDoc, query, where, getDocs} from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import Nav from './components/ui/Nav';
 
@@ -29,13 +29,21 @@ function App() {
     addDoc(collection(db, "favorites"), drink)
   }
 
-  function removeFavorite(drinkId) {
-    setFavorites(favorites.filter(item => item !== drinkId));
-    const drinkRef = doc(db, "favorites", drinkId);
+  async function getFavoriteFromDb(id) {
+    const favoriteRef = await query(collection(db, 'favorites'), where("uid", "==", user.uid), where("idDrink", "==", id));
+    const { docs }  = await getDocs(favoriteRef);
+    const favoritesArr = docs.map(doc => doc.data());
+    return {favoriteRef, favoritesArr};
+  }
 
-    console.log(drinkRef);
-    //this is not working:
-    deleteDoc(drinkRef);
+  async function removeFavorite(drinkId) {
+    setFavorites(favorites.filter(item => item !== drinkId));
+    const {favoriteRef} = await getFavoriteFromDb(drinkId);
+    const { docs }  = await getDocs(favoriteRef);
+    
+    docs.forEach((doc) => {
+      deleteDoc(doc.ref); 
+    });
   }
     
   async function fetchCockTails() {
@@ -69,7 +77,7 @@ useEffect(() => {
           <Routes>
             <Route path="/" element={<Home ingredient={ingredient} setIngredient={setIngredient} fetchCockTails={fetchCockTails} cockTails={cockTails} loading={loading} />}>Find your cocktail</Route>
             <Route path="/favorites" element={<Favorites favorites={favorites} user={user}/>}>Favorites</Route>
-            <Route path="/cocktail/:id" element={<Cocktail favorites={favorites} addFavorite={addFavorite} removeFavorite={removeFavorite} cockTails={cockTails} ingredient={ingredient} user={user}/>}>Cocktail</Route>
+            <Route path="/cocktail/:id" element={<Cocktail favorites={favorites} addFavorite={addFavorite} removeFavorite={removeFavorite} cockTails={cockTails} ingredient={ingredient} getFavoriteFromDb={getFavoriteFromDb}/>}>Cocktail</Route>
           </Routes>}
           
          
