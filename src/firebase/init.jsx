@@ -7,12 +7,12 @@ import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAcJqYqoPgGDdzanYYfxOuRqDM24bLk4PM",
-  authDomain: "cocktail-finder-react.firebaseapp.com",
-  projectId: "cocktail-finder-react",
-  storageBucket: "cocktail-finder-react.firebasestorage.app",
-  messagingSenderId: "373815150701",
-  appId: "1:373815150701:web:bfe10f0730500b5106d764"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
 // Initialize Firebase
